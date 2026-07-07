@@ -44,6 +44,6 @@ jobs:
           gcloud run services update tidepool-hello-world \
             --image=us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:${{ github.sha }} \
             --region=us-central1 \
+            --project=bitly-tidepool-dev \
             --quiet
-
 
