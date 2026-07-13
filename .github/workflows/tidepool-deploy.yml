@@ -29,21 +29,22 @@ jobs:
         env:
           DOCKER_BUILDKIT: "1"
         run: |
-          docker pull us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:latest || true
+          docker pull us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant:latest || true
           docker build \
-            --cache-from=us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:latest \
-            -t us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:${{ github.sha }} \
-            -t us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:latest \
+            --cache-from=us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant:latest \
+            -t us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant:${{ github.sha }} \
+            -t us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant:latest \
             .
 
       - name: Push
-        run: docker push --all-tags us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world
+        run: docker push --all-tags us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant
 
       - name: Deploy
         run: |
-          gcloud run services update tidepool-hello-world \
-            --image=us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/hello-world:${{ github.sha }} \
+          gcloud run services update tidepool-josh-tidepool-tenant \
+            --image=us-central1-docker.pkg.dev/bitly-tidepool-dev/tidepool-managed/josh-tidepool-tenant:${{ github.sha }} \
             --region=us-central1 \
+            --project=bitly-tidepool-dev \
             --quiet
 
 
